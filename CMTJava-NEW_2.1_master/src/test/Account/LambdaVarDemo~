@@ -1,0 +1,11 @@
+public class LambdaVarDemo {
+
+    public static void main(String[] args){             
+        final int i = 7;
+        Function<int, int> funcInt = (num2) -> {
+            i = num2;
+            return i;
+        };
+	System.out.println(funcInt.apply(10));
+    }   
+}

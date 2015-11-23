@@ -1,0 +1,8 @@
+soma=0
+for i in $(seq 1 30)
+do 	
+	res=`test.LinkedBlockingQueue.Main 3  > out_10m.txt`
+	soma=`javac -cp ../../../build "print $res+$soma"`
+done
+python -c "print '3_40', $soma/30.0" 
+

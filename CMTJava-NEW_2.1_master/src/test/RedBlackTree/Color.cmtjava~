@@ -1,0 +1,16 @@
+package test.RedBlackTree;
+
+import stm.*;
+	
+public enum Color{
+	RED, BLACK 
+};
+
+public class Color implements TObject{
+
+	private Integer value;
+
+	protected TreeNode(){
+		color = Color.BLACK;  // empty trees below the leaves should be black
+	}
+}

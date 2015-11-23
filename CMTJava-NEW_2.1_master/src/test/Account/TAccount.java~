@@ -1,0 +1,159 @@
+package test.Account;
+
+import stm.*;
+
+class TAccount implements TObject{
+
+	private Conteiner<Double> balance = new Conteiner<Double> ();
+private FieldInfo<Double> balanceFieldInfo = new FieldInfo<Double> ("balance", (Double a) -> {balance.setConteudo(a); return null;});
+	
+
+
+	public STM<stm.Void> setBalance (Double n) {
+		
+		return new STM<stm.Void>((Trans t) -> {
+			TResult r = null;
+			boolean mark[] = {false};
+			Long version = balanceFieldInfo.wlock.get(mark);
+		    if(mark[0] && t.transId.equals(version)){
+		    	assert(balanceFieldInfo.wlock.isMarked() && balanceFieldInfo.wlock.getReference().equals(t.transId));
+				t.writeSet.put(balanceFieldInfo, n);
+				r = new TResult(new stm.Void(), t, Trans.Status.ACTIVE);
+			}else{
+				if(balanceFieldInfo.wlock.compareAndSet(null, t.transId, false, true)){
+					t.writeSet.put(balanceFieldInfo, n);
+					if (balanceFieldInfo.rlock.getReference() > t.validationStamp && !t.extend()){
+						r = new TResult(null, t, Trans.Status.ABORTED);
+					}else
+						r = new TResult(new stm.Void(), t, Trans.Status.ACTIVE);
+					}
+				else{
+					r = new TResult(null, t, Trans.Status.ABORTED);
+				}
+			}		
+			return r;
+		});
+	}
+
+	public STM<Double> getBalance() {
+		
+		return new STM<Double> ((Trans t) -> {
+			TResult r = null;
+			Double result;
+			boolean mark[] = {false};
+			Long version = balanceFieldInfo.wlock.get(mark);
+			
+	    	if(mark[0] && t.transId.equals(version)){
+	    		assert(balanceFieldInfo.wlock.isMarked() && balanceFieldInfo.wlock.getReference().equals(t.transId));
+				result = (Double)t.writeSet.get(balanceFieldInfo);
+				r = new TResult(result, t, Trans.Status.ACTIVE);
+			}else{
+		   		version = balanceFieldInfo.rlock.get(mark);
+				while(true){
+					if(mark[0]==true){
+						version = balanceFieldInfo.rlock.get(mark);
+						continue;
+					}
+
+					result = balance.getConteudo();
+					long version2 = balanceFieldInfo.rlock.get(mark);
+					if(version == version2 && mark[0]==false) break;
+					version=version2;
+				}
+
+				boolean added = t.readSet.put(balanceFieldInfo, version);
+				if (!added || (version > t.validationStamp && !t.extend()) ){
+					r = new TResult(null, t, Trans.Status.ABORTED);
+				}else{
+					r = new TResult(result, t, Trans.Status.ACTIVE);	
+				}
+			}	
+
+			return r;
+		});
+	} 
+	private Conteiner<Integer> ops = new Conteiner<Integer> ();
+private FieldInfo<Integer> opsFieldInfo = new FieldInfo<Integer> ("ops", (Integer a) -> {ops.setConteudo(a); return null;});
+	
+
+
+	public STM<stm.Void> setOps (Integer n) {
+		
+		return new STM<stm.Void>((Trans t) -> {
+			TResult r = null;
+			boolean mark[] = {false};
+			Long version = opsFieldInfo.wlock.get(mark);
+		    if(mark[0] && t.transId.equals(version)){
+		    	assert(opsFieldInfo.wlock.isMarked() && opsFieldInfo.wlock.getReference().equals(t.transId));
+				t.writeSet.put(opsFieldInfo, n);
+				r = new TResult(new stm.Void(), t, Trans.Status.ACTIVE);
+			}else{
+				if(opsFieldInfo.wlock.compareAndSet(null, t.transId, false, true)){
+					t.writeSet.put(opsFieldInfo, n);
+					if (opsFieldInfo.rlock.getReference() > t.validationStamp && !t.extend()){
+						r = new TResult(null, t, Trans.Status.ABORTED);
+					}else
+						r = new TResult(new stm.Void(), t, Trans.Status.ACTIVE);
+					}
+				else{
+					r = new TResult(null, t, Trans.Status.ABORTED);
+				}
+			}		
+			return r;
+		});
+	}
+
+	public STM<Integer> getOps() {
+		
+		return new STM<Integer> ((Trans t) -> {
+			TResult r = null;
+			Integer result;
+			boolean mark[] = {false};
+			Long version = opsFieldInfo.wlock.get(mark);
+			
+	    	if(mark[0] && t.transId.equals(version)){
+	    		assert(opsFieldInfo.wlock.isMarked() && opsFieldInfo.wlock.getReference().equals(t.transId));
+				result = (Integer)t.writeSet.get(opsFieldInfo);
+				r = new TResult(result, t, Trans.Status.ACTIVE);
+			}else{
+		   		version = opsFieldInfo.rlock.get(mark);
+				while(true){
+					if(mark[0]==true){
+						version = opsFieldInfo.rlock.get(mark);
+						continue;
+					}
+
+					result = ops.getConteudo();
+					long version2 = opsFieldInfo.rlock.get(mark);
+					if(version == version2 && mark[0]==false) break;
+					version=version2;
+				}
+
+				boolean added = t.readSet.put(opsFieldInfo, version);
+				if (!added || (version > t.validationStamp && !t.extend()) ){
+					r = new TResult(null, t, Trans.Status.ABORTED);
+				}else{
+					r = new TResult(result, t, Trans.Status.ACTIVE);	
+				}
+			}	
+
+			return r;
+		});
+	} 
+
+	 TAccount(){ 
+	this(0.0d);
+	this(1.0d);	
+		this.balance.setConteudo(3.);
+
+
+	}
+
+	 TAccount(Double b){ 
+	
+		this.balance.setConteudo(b);
+
+
+	}
+
+}

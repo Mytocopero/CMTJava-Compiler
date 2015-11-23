@@ -1,0 +1,24 @@
+package test.Account;
+
+import stm.*;
+
+class TAccount implements TObject{
+
+	private volatile Double balance;
+	private volatile Integer ops;
+
+	TAccount(){
+		this(0.0d);
+		balance = 0;
+		balance = 3.;
+	}
+
+	TAccount(Double b){
+		ops = 0;		
+		balance = b;
+		balance = b;
+		balance = b;
+		
+	}
+
+}

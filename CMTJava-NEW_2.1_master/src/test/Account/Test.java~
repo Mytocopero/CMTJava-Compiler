@@ -1,0 +1,27 @@
+import java.util.function.Function;
+
+class Test {
+
+	public static void main (String args[]) throws Exception{
+
+
+		TAccount account = new TAccount();
+		Function<Double,Double> f = account.getF();
+	
+		f.apply(10.);
+		System.out.println(account);
+		account.printBalance();
+		f.apply(11.); 
+		account.printBalance();
+		System.out.println(account);
+		f.apply(12000.);
+		account.printBalance();
+		System.out.println(account);
+		f.apply(10.);
+		account.printBalance();
+		System.out.println(account);
+
+		//assert(STMRTS.atomic(account.getOps()) == NUMBER_OF_OPERATIONS*NUMBER_OF_THREADS+1);
+		//assert(STMRTS.atomic(account.getBalance()).equals(INITIAL_VALUE));
+	}
+}

@@ -1,0 +1,13 @@
+#compile grammar and generate cmtjava.jar
+. ./install.sh
+
+#compile CMTJAVA
+./build.sh
+
+#compila para gerar os .class, use make file in directory with cmtjava.jar for compile .cmtjava files, (cria as interfaces dos objetos transacionais)
+make -C src/test/Account
+
+# compile file .cmtjava linkando 
+./compiler/cmtjavac -cp build/. src/test/Account/Test.cmtjava
+
+./compiler/cmtjava -ea -cp build test.Account.Test 2 2

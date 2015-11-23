@@ -1,0 +1,11 @@
+import java.util.function.Function;
+/*w ww  . ja va2 s .  co m*/
+public class LambdaVarDemo {
+  public static void main(String[] argv) {
+    String x = "Hello"; 
+    
+    Function<String,String> func1 = y -> {/*x="a";*/ return y + " "+ x ;};
+    System.out.println(func1.apply("java2s.com"));
+    
+  }
+}

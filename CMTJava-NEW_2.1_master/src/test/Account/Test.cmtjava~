@@ -1,0 +1,22 @@
+package test.Account;
+
+import stm.*;
+
+class Test {
+
+	public static void main (String args[]) throws Exception{
+
+
+		Account account = new Account();
+		STMRTS.atomic(account.deposit(10.));
+		STMRTS.atomic(account.withdraw(1.));
+		
+		Object i = STMRTS.atomic(account.getBalance());
+		System.out.println(i);
+		
+		STMRTS.atomic(account.deposit(1.));
+
+		//assert(STMRTS.atomic(account.getOps()) == NUMBER_OF_OPERATIONS*NUMBER_OF_THREADS+1);
+		//assert(STMRTS.atomic(account.getBalance()).equals(INITIAL_VALUE));
+	}
+} 

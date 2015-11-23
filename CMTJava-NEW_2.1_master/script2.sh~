@@ -1,0 +1,9 @@
+soma=0
+for i in $(seq 1 3)
+do 
+	res=`java -cp ./build test.LinkedBlockingQueue.Main 4 >> Linke_4.txt`
+	soma=`python -c "print $res+$soma"`
+done
+python -c "print 'LBQ_4_4000', $soma/30.0"
+
+

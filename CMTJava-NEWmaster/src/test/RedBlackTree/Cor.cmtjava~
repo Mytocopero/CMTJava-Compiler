@@ -1,0 +1,14 @@
+package test.RedBlackTree;
+
+import stm.*;
+	
+enum Color{
+	RED, BLACK 
+};
+
+public class Cor implements TObject{
+
+	private Integer color;
+
+	
+}
