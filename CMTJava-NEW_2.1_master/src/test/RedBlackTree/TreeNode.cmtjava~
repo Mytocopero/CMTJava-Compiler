@@ -2,7 +2,7 @@ package test.RedBlackTree;
 
 import stm.*;
 	
-public enum Color{ RED, BLACK };
+enum Color{ RED, BLACK };
 
 public class TreeNode implements TObject{
 

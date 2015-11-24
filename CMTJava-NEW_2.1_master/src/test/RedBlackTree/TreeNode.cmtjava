@@ -15,14 +15,16 @@ public class TreeNode implements TObject{
 	protected TreeNode(){
 		value = null;
 		parent = null;
-		left = right = this;
+		left = this;
+		right = this;
 		color = Color.BLACK;  // empty trees below the leaves should be black
  }
     
     protected TreeNode(Integer val){
 		value = val;
 		parent = null;
-		left = right = this;
+		left = this;
+		right = this;
 		color = Color.BLACK;  // empty trees below the leaves should be black
     }
 

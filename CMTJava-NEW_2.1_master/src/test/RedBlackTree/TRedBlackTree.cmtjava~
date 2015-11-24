@@ -9,6 +9,6 @@ public class TRedBlackTree implements TObject{
 
 	public TRedBlackTree(){
 		EMPTY = new TreeNode();
-		root = new TreeNode();
+		root = EMPTY;
 	}
 }

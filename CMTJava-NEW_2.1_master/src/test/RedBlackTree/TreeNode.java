@@ -6,9 +6,11 @@ enum Color{ RED, BLACK };
 
 public class TreeNode implements TObject{
 
-	private Integer value;
-	private FieldInfo<Integer> valueFieldInfo = new FieldInfo<Integer> ("value", (Integer a) -> {value = a; return null;});
+	private Conteiner<Integer> value = new Conteiner<Integer> ();
+private FieldInfo<Integer> valueFieldInfo = new FieldInfo<Integer> ("value", (Integer a) -> {value.setConteudo(a); return null;});
 	
+
+
 	public STM<stm.Void> setValue (Integer n) {
 		
 		return new STM<stm.Void>((Trans t) -> {
@@ -55,7 +57,7 @@ public class TreeNode implements TObject{
 						continue;
 					}
 
-					result = value;
+					result = value.getConteudo();
 					long version2 = valueFieldInfo.rlock.get(mark);
 					if(version == version2 && mark[0]==false) break;
 					version=version2;
@@ -72,9 +74,11 @@ public class TreeNode implements TObject{
 			return r;
 		});
 	} 
-	private TreeNode left;
-	private FieldInfo<TreeNode> leftFieldInfo = new FieldInfo<TreeNode> ("left", (TreeNode a) -> {left = a; return null;});
+	private Conteiner<TreeNode> left = new Conteiner<TreeNode> ();
+private FieldInfo<TreeNode> leftFieldInfo = new FieldInfo<TreeNode> ("left", (TreeNode a) -> {left.setConteudo(a); return null;});
 	
+
+
 	public STM<stm.Void> setLeft (TreeNode n) {
 		
 		return new STM<stm.Void>((Trans t) -> {
@@ -121,7 +125,7 @@ public class TreeNode implements TObject{
 						continue;
 					}
 
-					result = left;
+					result = left.getConteudo();
 					long version2 = leftFieldInfo.rlock.get(mark);
 					if(version == version2 && mark[0]==false) break;
 					version=version2;
@@ -138,9 +142,11 @@ public class TreeNode implements TObject{
 			return r;
 		});
 	} 
-	private TreeNode right;
-	private FieldInfo<TreeNode> rightFieldInfo = new FieldInfo<TreeNode> ("right", (TreeNode a) -> {right = a; return null;});
+	private Conteiner<TreeNode> right = new Conteiner<TreeNode> ();
+private FieldInfo<TreeNode> rightFieldInfo = new FieldInfo<TreeNode> ("right", (TreeNode a) -> {right.setConteudo(a); return null;});
 	
+
+
 	public STM<stm.Void> setRight (TreeNode n) {
 		
 		return new STM<stm.Void>((Trans t) -> {
@@ -187,7 +193,7 @@ public class TreeNode implements TObject{
 						continue;
 					}
 
-					result = right;
+					result = right.getConteudo();
 					long version2 = rightFieldInfo.rlock.get(mark);
 					if(version == version2 && mark[0]==false) break;
 					version=version2;
@@ -204,9 +210,11 @@ public class TreeNode implements TObject{
 			return r;
 		});
 	} 
-	private TreeNode parent;
-	private FieldInfo<TreeNode> parentFieldInfo = new FieldInfo<TreeNode> ("parent", (TreeNode a) -> {parent = a; return null;});
+	private Conteiner<TreeNode> parent = new Conteiner<TreeNode> ();
+private FieldInfo<TreeNode> parentFieldInfo = new FieldInfo<TreeNode> ("parent", (TreeNode a) -> {parent.setConteudo(a); return null;});
 	
+
+
 	public STM<stm.Void> setParent (TreeNode n) {
 		
 		return new STM<stm.Void>((Trans t) -> {
@@ -253,7 +261,7 @@ public class TreeNode implements TObject{
 						continue;
 					}
 
-					result = parent;
+					result = parent.getConteudo();
 					long version2 = parentFieldInfo.rlock.get(mark);
 					if(version == version2 && mark[0]==false) break;
 					version=version2;
@@ -270,9 +278,11 @@ public class TreeNode implements TObject{
 			return r;
 		});
 	} 
-	private Color color;
-	private FieldInfo<Color> colorFieldInfo = new FieldInfo<Color> ("color", (Color a) -> {color = a; return null;});
+	private Conteiner<Color> color = new Conteiner<Color> ();
+private FieldInfo<Color> colorFieldInfo = new FieldInfo<Color> ("color", (Color a) -> {color.setConteudo(a); return null;});
 	
+
+
 	public STM<stm.Void> setColor (Color n) {
 		
 		return new STM<stm.Void>((Trans t) -> {
@@ -319,7 +329,7 @@ public class TreeNode implements TObject{
 						continue;
 					}
 
-					result = color;
+					result = color.getConteudo();
 					long version2 = colorFieldInfo.rlock.get(mark);
 					if(version == version2 && mark[0]==false) break;
 					version=version2;
@@ -337,25 +347,33 @@ public class TreeNode implements TObject{
 		});
 	} 
 	
-	protected TreeNode(){
-		value = null;
-		parent = null;
-		left = right = this;
-		color = Color.BLACK;  // empty trees below the leaves should be black
- }
+		protected TreeNode() 
+	{
+				this.value.setConteudo(null);
+				this.parent.setConteudo(null);
+				this.left.setConteudo(this);
+				this.right.setConteudo(this);
+				this.color.setConteudo(Color.BLACK);  // empty trees below the leaves should be black
+	 }
+	
     
-    protected TreeNode(Integer val){
-		value = val;
-		parent = null;
-		left = right = this;
-		color = Color.BLACK;  // empty trees below the leaves should be black
-    }
+    	protected TreeNode(Integer val) 
+	{
+				this.value.setConteudo(val);
+				this.parent.setConteudo(null);
+				this.left.setConteudo(this);
+				this.right.setConteudo(this);
+				this.color.setConteudo(Color.BLACK);  // empty trees below the leaves should be black
+	    }
+	
 
-   protected TreeNode(Integer val, TreeNode parent, TreeNode left, TreeNode right){
-		value = val;
-		this.parent = parent;
-		this.left = left;
-		this.right = right;
-		color = Color.BLACK;  // empty trees below the leaves should be black
-    }
+   	protected TreeNode(Integer val, TreeNode parent, TreeNode left, TreeNode right) 
+	{
+				this.value.setConteudo(val);
+				this.parent.setConteudo(parent);
+				this.left.setConteudo(left);
+				this.right.setConteudo(right);
+				this.color.setConteudo(Color.BLACK);  // empty trees below the leaves should be black
+	    }
+	
 }
